@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import beginTest from "../views/beginTest.vue";
 import Category from "../views/Category.vue";
+import Result from "../views/Result.vue";
 
 Vue.use(VueRouter);
 
@@ -27,6 +28,11 @@ const routes = [
     path: "/category",
     name: "Category",
     component: Category,
+  },
+  {
+    path: "/result",
+    name: "Result",
+    component: Result,
   }
 ];
 

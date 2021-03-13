@@ -1,7 +1,7 @@
 <template>
   <div class="root">
     <div class="test">
-      <Question />
+      <div class="font">вопрос категории про отдых и увлечения </div>
     </div>
 
     <div class="gallery_container">
@@ -55,10 +55,10 @@ export default {
     width: 700px;
     align-content: center;
     min-height: 490px;
-  display: flex;
-  margin: 0 auto;
-   text-align: center;
+    display: flex;
+    margin: 0 auto;
    flex-wrap: no-wrap;
+  
 
   @include media(">tablet", "<desktop") {
     padding: 0 20px;
@@ -70,10 +70,25 @@ export default {
 }
 .test {
   width: 389px;
-  height: 100%;
-  
+  height: 490px;
+  background: #FBCE26;
+  display: inline-block;
+  vertical-align: middle;
    
 }
+
+.font {
+    font-family: Roboto;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 33px;
+    letter-spacing: 0px;
+    text-align: center;
+    font: #365001;
+    text-align: center;
+}
+
 .gallery_container {
   width: 315px;
   height: 100%;
