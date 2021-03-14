@@ -24,7 +24,7 @@
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+ 
   color: var(--textColor);
 
   .logo {

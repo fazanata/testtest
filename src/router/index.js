@@ -4,6 +4,8 @@ import Home from "../views/Home.vue";
 import beginTest from "../views/beginTest.vue";
 import Category from "../views/Category.vue";
 import Result from "../views/Result.vue";
+import Section from "../views/Section.vue";
+
 
 Vue.use(VueRouter);
 
@@ -33,6 +35,11 @@ const routes = [
     path: "/result",
     name: "Result",
     component: Result,
+  },
+  {
+    path: "/section",
+    name: "Section",
+    component: Section,
   }
 ];
 

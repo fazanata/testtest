@@ -37,7 +37,7 @@ export default {
       this.showEffect = !this.showEffect;
       console.log(this.showEffect);
 
-      setTimeout(() => this.$router.push({ path: "result" }), 2000);
+      setTimeout(() => this.$router.push({ path: "category" }), 2000);
     },
   },
 };
@@ -141,6 +141,7 @@ export default {
   margin-left: 40px;
   margin-right: 40px;
   margin-bottom: 30px;
+  margin-top: 140px;
 }
 .button {
   font-family: Roboto;

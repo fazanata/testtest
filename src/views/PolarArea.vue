@@ -67,8 +67,8 @@ export default {
                 font: {
                     lineHeight: 1.6
                 },
-                formatter: function(value, ctx) {
-                    return ctx.chart.data.labels[ctx.dataIndex] + '\n' + value + '%';
+                formatter: function(value) {
+                    return value + '%';
                 }
             }
       },
