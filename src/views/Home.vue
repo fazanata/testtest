@@ -1,7 +1,15 @@
 <template>
   <div id="home">
-    <h1>О программе</h1>
-    Vue js 2, Webpack 4, php, mysql
-    <p>Vue Router</p>
+    <Section />
   </div>
 </template>
+
+<script>
+import Section from '../views/Section'
+
+export default {
+  components: {
+    Section
+  }
+}
+</script>
