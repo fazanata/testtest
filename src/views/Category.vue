@@ -40,6 +40,7 @@
 <script>
 import Question from "../views/Question";
 import ActiveQuiz from "../components/activeQuiz";
+import Result from '../views/Result';
 
 export default {
   data() {
@@ -195,7 +196,7 @@ export default {
           this.ballCategory[this.countCategory].maxBall +
           this.findMaxBall(this.quiz[this.activeQuestion].answers);
 
-        console.log("ball cat=", this.ballCategory[this.countCategory].ball);
+        //console.log("ball cat=", this.ballCategory);
 
         if (this.isQuizFinished()) {
           console.log("finished");
@@ -203,9 +204,11 @@ export default {
         } else {
           
           //начинаем считать новую категорию
+          
+          this.activeQuestion = this.activeQuestion + 1;
           if (
             this.activeCategory !==
-            this.quiz[this.activeQuestion + 1].category
+            this.quiz[this.activeQuestion - 1].category
           ) {
             this.countCategory = this.countCategory + 1;
             this.ballCategory.push({
@@ -213,9 +216,8 @@ export default {
               ball: 0,
               maxBall: 0
             })
-            this.activeCategory = this.quiz[this.activeQuestion + 1].category;
+            this.activeCategory = this.quiz[this.activeQuestion].category;
           }
-          this.activeQuestion = this.activeQuestion + 1;
         }
 
         window.clearTimeout(timeout);
@@ -231,6 +233,7 @@ export default {
   components: {
     Question,
     ActiveQuiz,
+    Result
   },
 };
 </script>

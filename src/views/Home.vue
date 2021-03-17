@@ -1,6 +1,7 @@
 <template>
   <div id="home">
-    <img class="logo" src="../assets/logo.png" alt="logo" />
-    <h1>Главная</h1>
+    <h1>О программе</h1>
+    Vue js 2, Webpack 4, php, mysql
+    <p>Vue Router</p>
   </div>
 </template>
