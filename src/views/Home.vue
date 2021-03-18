@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <Section />
+    <Section v-bind:back-color="backColor"/>
   </div>
 </template>
 
@@ -8,6 +8,11 @@
 import Section from '../views/Section'
 
 export default {
+  data() {
+    return {
+      backColor: "#787758",
+    }
+  },
   components: {
     Section
   }
