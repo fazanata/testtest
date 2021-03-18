@@ -113,7 +113,7 @@ export default {
           ],
         },
         {
-          id: 4,
+          id: 3,
           question: "четвертый вопрос?",
           category: 2,
           answers: [
@@ -144,9 +144,9 @@ export default {
           ],
         },
         {
-          id: 2,
+          id: 4,
           question: "второй вопрос?",
-          category: 1,
+          category: 3,
           answers: [
             {
               answer_id: 1,
@@ -187,6 +187,9 @@ export default {
     });
   },
   methods: {
+    setBallsTest() {
+      this.$store.dispatch('setBallsTest', this.ballCategory)
+    },
     answerClick(id) {
       const timeout = window.setTimeout(() => {
         this.ballCategory[this.countCategory].ball =
@@ -196,10 +199,11 @@ export default {
           this.ballCategory[this.countCategory].maxBall +
           this.findMaxBall(this.quiz[this.activeQuestion].answers);
 
-        //console.log("ball cat=", this.ballCategory);
+        
 
         if (this.isQuizFinished()) {
-          console.log("finished");
+          console.log(this.ballCategory);
+          this.setBallsTest();
           this.$router.push({ path: "result" })
         } else {
           
@@ -208,15 +212,17 @@ export default {
           this.activeQuestion = this.activeQuestion + 1;
           if (
             this.activeCategory !==
-            this.quiz[this.activeQuestion - 1].category
+            this.quiz[this.activeQuestion].category
           ) {
             this.countCategory = this.countCategory + 1;
+            this.activeCategory = this.quiz[this.activeQuestion].category;
+            
             this.ballCategory.push({
               id_cat: this.activeCategory,
               ball: 0,
               maxBall: 0
             })
-            this.activeCategory = this.quiz[this.activeQuestion].category;
+            console.log('active categ=', this.activeCategory)
           }
         }
 

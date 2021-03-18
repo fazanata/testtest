@@ -5,6 +5,7 @@ import beginTest from "../views/beginTest.vue";
 import Category from "../views/Category.vue";
 import Result from "../views/Result.vue";
 import Section from "../views/Section.vue";
+import Cat from "../views/Cat.vue";
 
 
 Vue.use(VueRouter);
@@ -40,6 +41,11 @@ const routes = [
     path: "/section",
     name: "Section",
     component: Section,
+  },
+  {
+    path: "/cat",
+    name: "Cat",
+    component: Cat,
   }
 ];
 

@@ -90,6 +90,11 @@ export default {
     this.drawAllCategories();
 
   },
+  computed: {
+    ballsTest() {
+      return this.$store.state.ballCategory;
+    }
+  },
   methods: {
     axiosGetData: async function (url) {
       var data = "";
