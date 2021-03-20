@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import api from '../api/api.js';
 
 export default {
   props: ["ball"],
@@ -52,8 +52,13 @@ export default {
           maxBall: 12,
         },
         {
-          id_cat: 4,
+          id_cat: 5,
           ball: 6,
+          maxBall: 12,
+        },
+          {
+          id_cat: 6,
+          ball: 10,
           maxBall: 12,
         },
       ],
@@ -96,18 +101,8 @@ export default {
     }
   },
   methods: {
-    axiosGetData: async function (url) {
-      var data = "";
-      try {
-        const response = await axios.get( url );
-        data = response;
-      } catch (e) {
-        this.errors.push(e);
-      }
-      return data;
-    },
     drawAllCategories: async function() {
-      var output = await this.axiosGetData('http://test.ce74911.tmweb.ru/api_test/category/readCategories.php');
+      var output = await api.axiosGetData('http://test.ce74911.tmweb.ru/api_test/category/readCategories.php');
       this.name = output['data']
       
       var lastend = 0;

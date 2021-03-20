@@ -6,6 +6,7 @@ import Category from "../views/Category.vue";
 import Result from "../views/Result.vue";
 import Section from "../views/Section.vue";
 import Cat from "../views/Cat.vue";
+import anima from "../views/anima.vue";
 
 
 Vue.use(VueRouter);
@@ -46,6 +47,11 @@ const routes = [
     path: "/cat",
     name: "Cat",
     component: Cat,
+  },
+  {
+    path: "/anima",
+    name: "anima",
+    component: anima,
   }
 ];
 

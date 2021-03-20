@@ -1,18 +1,21 @@
 <template>
-  <div class="root">
+  <div class="root" v-bind:style="{ background: backColor }">
     <div class="test">
+    <transition name="slide-fade">
       <ActiveQuiz
         v-bind:question="quiz[activeQuestion].question"
         v-bind:quiz-length="quiz.length"
         v-bind:answer-number="activeQuestion + 1"
         v-bind:answers="quiz[activeQuestion].answers"
+        v-bind:font-color="fontColor"
         @answer-click="answerClick"
+        v-if="showQuestion"
       />
+    </transition>
     </div>
-
     <div class="gallery_container">
       <div class="gallery">
-        <figure class="gallery__item gallery__item--1">
+        <figure class="gallery__ item gallery__item--1">
           <img class="gallery__img" src="../assets/buss@2x.png" alt="Image 1" />
         </figure>
         <figure class="gallery__item gallery__item--2">
@@ -38,6 +41,7 @@
 </template>
 
 <script>
+import api from '../api/api.js'
 import Question from "../views/Question";
 import ActiveQuiz from "../components/activeQuiz";
 import Result from '../views/Result';
@@ -45,10 +49,14 @@ import Result from '../views/Result';
 export default {
   data() {
     return {
+      showQuestion:false,
       activeQuestion: 0,
       activeCategory: 0,
       countCategory: 0,
       ballCategory: [],
+      backColor: '',
+      fontColor: '',
+      categories: [],
       quiz: [
         {
           id: 1,
@@ -115,7 +123,7 @@ export default {
         {
           id: 3,
           question: "четвертый вопрос?",
-          category: 2,
+          category: 3,
           answers: [
             {
               answer_id: 1,
@@ -146,7 +154,7 @@ export default {
         {
           id: 4,
           question: "второй вопрос?",
-          category: 3,
+          category: 4,
           answers: [
             {
               answer_id: 1,
@@ -185,12 +193,16 @@ export default {
       ball: 0,
       maxBall: 0,
     });
+    this.showQuestion=true;
+    //получаем данные цветов категории
+    this.getCategoryColors();
   },
   methods: {
     setBallsTest() {
       this.$store.dispatch('setBallsTest', this.ballCategory)
     },
     answerClick(id) {
+      this.showQuestion=false;
       const timeout = window.setTimeout(() => {
         this.ballCategory[this.countCategory].ball =
           this.ballCategory[this.countCategory].ball +
@@ -202,18 +214,26 @@ export default {
         
 
         if (this.isQuizFinished()) {
-          console.log(this.ballCategory);
+          
           this.setBallsTest();
           this.$router.push({ path: "result" })
         } else {
           
           //начинаем считать новую категорию
           
-          this.activeQuestion = this.activeQuestion + 1;
+
+          this.activeQuestion = this.activeQuestion + 1;          
+          
+          
           if (
             this.activeCategory !==
             this.quiz[this.activeQuestion].category
           ) {
+            
+            //меняем цвет из бд
+            this.backColor = this.categories.find(c => c.category_id === this.quiz[this.activeQuestion].category+'').category_color;
+            this.fontColor = this.categories.find(c => c.category_id === this.quiz[this.activeQuestion].category+'').category_font;
+            
             this.countCategory = this.countCategory + 1;
             this.activeCategory = this.quiz[this.activeQuestion].category;
             
@@ -222,18 +242,25 @@ export default {
               ball: 0,
               maxBall: 0
             })
-            console.log('active categ=', this.activeCategory)
+            
           }
         }
-
+        this.showQuestion=true;
         window.clearTimeout(timeout);
-      }, 1000);
+      }, 500);
+      
     },
     isQuizFinished() {
       return this.activeQuestion + 1 === this.quiz.length;
     },
     findMaxBall(answers) {
       return Math.max(...answers.map((o) => o.answer_score));
+    },
+    getCategoryColors: async function() {
+      var output = await api.axiosGetData('http://test.ce74911.tmweb.ru/api_test/category/readCategories.php');
+      this.categories = output['data'];
+      this.backColor=this.categories[0].category_color;
+      this.fontColor=this.categories[0].category_font;
     },
   },
   components: {
@@ -274,7 +301,7 @@ export default {
 .test {
   width: 389px;
   height: 490px;
-  background: #fbce26;
+  background: var(--background-color);//#fbce26;
   display: inline-block;
   vertical-align: middle;
   margin-top: 100px;
@@ -323,5 +350,19 @@ export default {
   grid-row-start: 7;
   grid-row-end: 9;
 }
+
+
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
 </style>
 

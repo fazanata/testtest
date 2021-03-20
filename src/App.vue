@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="nav">
-      <router-link to="/cat">Cat</router-link>| <router-link to="/beginTest">Test</router-link>| <router-link to="/about"
+      <router-link to="/anima">Anima</router-link>| <router-link to="/beginTest">Test</router-link>| <router-link to="/about"
         >API</router-link>
         <router-link to="/section">Section</router-link>
     </div>

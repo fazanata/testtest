@@ -1,18 +1,22 @@
 <template>
   <div class="root">
     <div class="mainitem">
-      <div class="centerdiv">
-      <p class="font_main">
-        eBay исполняется 25 лет!Проверьте, а все ли у вас сбалансировано в жизни
-      </p>
+        <transition name="fade">
+        <div class="centerdiv"  v-if="showText">
+          <p class="font_main">
+            eBay исполняется 25 лет!Проверьте, а все ли у вас сбалансировано в
+            жизни
+          </p>
 
-      <button type="submit" class="button" v-on:click="gotoTest">
-        Начать тест
-      </button>
-      </div>
+          <button type="submit" class="button" v-on:click="gotoTest">
+            Начать тест
+          </button>
+        </div>
+        </transition>
     </div>
 
-    <div class="img_container">
+    <transition name="bounce">
+    <div class="img_container" v-if="showEffect">
       <figure class="gallery__item gallery__item--1">
         <img class="gallery__img" src="../assets/1@2x.png" alt="Image 1" />
       </figure>
@@ -20,24 +24,25 @@
         <img class="gallery__img" src="../assets/2@2x.png" alt="Image 2" />
       </figure>
     </div>
+    </transition>
   </div>
+
 </template>
 
 <script>
-
-
 export default {
   data() {
     return {
       showEffect: true,
+      showText: true,
     };
   },
   methods: {
     gotoTest: function (event) {
+      this.showText = ! this.showText;
       this.showEffect = !this.showEffect;
-      console.log(this.showEffect);
-
-      setTimeout(() => this.$router.push({ path: "category" }), 2000);
+      setTimeout(() => this.$router.push({ path: "category" }), 1000);
+      
     },
   },
 };
@@ -56,43 +61,44 @@ export default {
 }
 .root {
   width: 700px;
-  
 
   display: flex;
   max-width: 700px;
   margin: 0 auto;
-  
+
   flex-wrap: no-wrap;
   background: #659eff;
 
- @include media(">tablet", "<desktop") {
-    
+  @include media(">tablet", "<desktop") {
     flex-wrap: wrap;
   }
   @media screen and (max-width: 700px) {
     flex-wrap: wrap;
   }
-
 }
-  @media screen and (max-width: 700px) {
-	.root{ flex-wrap: wrap; } /* для переноса */
-  	.img_container{ flex-wrap: wrap; } /* разрешаем перенос */
-	.img_container{ flex-basis:100%; } /* на всю ширину */
-	
+@media screen and (max-width: 700px) {
+  .root {
+    flex-wrap: wrap;
+  } /* для переноса */
+  .img_container {
+    flex-wrap: wrap;
+  } /* разрешаем перенос */
+  .img_container {
+    flex-basis: 100%;
+  } /* на всю ширину */
 }
 /* меньше 450px */
 @media screen and (max-width: 450px) {
-  .root {flex-wrap: wrap;}
-
-
+  .root {
+    flex-wrap: wrap;
+  }
 }
-
 
 .mainitem {
   min-width: 482px;
   min-height: 490px;
   height: 490px;
-
+  background: #659eff;
 }
 .centerdiv {
   margin: 14px 0;
@@ -173,7 +179,40 @@ export default {
   border: none;
 }
 
+.bounce-enter-active {
+  animation: bounceIn 2s;
+}
+.bounce-leave-active {
+  animation: bounceIn 2s;
+}
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-90px);
+    transform: scale(2);
+    
+  }
+}
 
+.slide-fade-enter-active {
+  transition: all .3s ease;
+}
+.slide-fade-leave-active {
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active до версии 2.1.8 */ {
+  transform: translateX(-30px);
+  opacity: 0;
+}
 
+ /* скрываем все за пределами слайдера */
 
 </style>

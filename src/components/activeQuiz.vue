@@ -1,6 +1,6 @@
 <template>
 
-  <div class="activeQuiz">
+  <div class="activeQuiz" v-bind:style="{ color: this.font }">
     <p class="question">
       
       <small>{{answerNumber}} из {{quizLength}}</small>
@@ -20,14 +20,19 @@
 import AnswersList from "./answersList";
 
 export default {
-  props: ["answers", "question", "answerNumber", "quizLength"],
+  props: ["answers", "question", "answerNumber", "quizLength", "fontColor"],
   data() {
     return {
       show: true,
+      font:'',
     };
   },
   components: {
     AnswersList,
+  },
+  mounted() {
+    this.font = this.fontColor;
+    console.log('f c =', this.fontColor)
   },
   methods: {
     answerClick(id) {
@@ -53,7 +58,7 @@ export default {
   font-weight: 900;
   line-height: 33px;
   letter-spacing: 0px;
-  font: #365001;
+  font: var(--fontColor);
   text-align: center;
 }
 </style>
