@@ -125,7 +125,7 @@ export default {
         
         this.vueCanvas.fillText(this.name[n].category_name, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 );
         console.log(lastend)
-        var img = new Image();
+        let img = new Image();
         img.src = this.img[n];
         this.vueCanvas.drawImage(img, 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
         console.log('img=', this.img[n])
