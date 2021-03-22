@@ -130,7 +130,7 @@ export default {
         this.vueCanvas.drawImage(img, 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
         console.log('img=', this.img[n])
         img.onload = function() {
-          this.vueCanvas.drawImage(img, 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
+          this.vueCanvas.drawImage(img, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
         
         };
         lastend += (Math.PI * 2) / this.ballCategory.length;
