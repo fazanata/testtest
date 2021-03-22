@@ -1,61 +1,47 @@
 <template>
   <div class="root" v-bind:style="{ background: backColor }">
     <div class="test">
+      <transition name="slide-fade">
+        <ActiveQuiz
+          v-bind:question="quiz[activeQuestion].question"
+          v-bind:quiz-length="quiz.length"
+          v-bind:answer-number="activeQuestion + 1"
+          v-bind:answers="quiz[activeQuestion].answers"
+          v-bind:font-color="fontColor"
+          @answer-click="answerClick"
+          v-if="showQuestion"
+        />
+      </transition>
+    </div>
     <transition name="slide-fade">
-      <ActiveQuiz
-        v-bind:question="quiz[activeQuestion].question"
-        v-bind:quiz-length="quiz.length"
-        v-bind:answer-number="activeQuestion + 1"
-        v-bind:answers="quiz[activeQuestion].answers"
-        v-bind:font-color="fontColor"
-        @answer-click="answerClick"
-        v-if="showQuestion"
-      />
+    <div>
+      <img1 v-if="countCategory + 1 === 1" />
+      <img2 v-if="countCategory + 1 === 2" />
+      <img3 v-if="countCategory + 1 === 3" />
+    </div>
     </transition>
-    </div>
-    <div class="gallery_container">
-      <div class="gallery">
-        <figure class="gallery__ item gallery__item--1">
-          <img class="gallery__img" src="../assets/buss@2x.png" alt="Image 1" />
-        </figure>
-        <figure class="gallery__item gallery__item--2">
-          <img
-            class="gallery__img"
-            src="../assets/wheel@2x.png"
-            alt="Image 2"
-          />
-        </figure>
-        <figure class="gallery__item gallery__item--3">
-          <img
-            class="gallery__img"
-            src="../assets/gamepad-yellow@2x.png"
-            alt="Image 3"
-          />
-        </figure>
-        <figure class="gallery__item gallery__item--4">
-          <img class="gallery__img" src="../assets/bike@2x.png" alt="Image 4" />
-        </figure>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
-import api from '../api/api.js'
+import api from "../api/api.js";
 import Question from "../views/Question";
 import ActiveQuiz from "../components/activeQuiz";
-import Result from '../views/Result';
+import Result from "../views/Result";
+import img1 from "../components/img/img1";
+import img2 from "../components/img/img2";
+import img3 from "../components/img/img3";
 
 export default {
   data() {
     return {
-      showQuestion:false,
+      showQuestion: false,
       activeQuestion: 0,
       activeCategory: 0,
       countCategory: 0,
       ballCategory: [],
-      backColor: '',
-      fontColor: '',
+      backColor: "",
+      fontColor: "",
       categories: [],
       quiz: [
         {
@@ -122,7 +108,7 @@ export default {
         },
         {
           id: 3,
-          question: "четвертый вопрос?",
+          question: "третий вопрос?",
           category: 3,
           answers: [
             {
@@ -153,7 +139,7 @@ export default {
         },
         {
           id: 4,
-          question: "второй вопрос?",
+          question: "четвертый вопрос?",
           category: 4,
           answers: [
             {
@@ -193,16 +179,16 @@ export default {
       ball: 0,
       maxBall: 0,
     });
-    this.showQuestion=true;
+    this.showQuestion = true;
     //получаем данные цветов категории
     this.getCategoryColors();
   },
   methods: {
     setBallsTest() {
-      this.$store.dispatch('setBallsTest', this.ballCategory)
+      this.$store.dispatch("setBallsTest", this.ballCategory);
     },
     answerClick(id) {
-      this.showQuestion=false;
+      this.showQuestion = false;
       const timeout = window.setTimeout(() => {
         this.ballCategory[this.countCategory].ball =
           this.ballCategory[this.countCategory].ball +
@@ -211,44 +197,38 @@ export default {
           this.ballCategory[this.countCategory].maxBall +
           this.findMaxBall(this.quiz[this.activeQuestion].answers);
 
-        
-
         if (this.isQuizFinished()) {
-          
           this.setBallsTest();
-          this.$router.push({ path: "result" })
+          this.$router.push({ path: "result" });
         } else {
-          
           //начинаем считать новую категорию
-          
 
-          this.activeQuestion = this.activeQuestion + 1;          
-          
-          
-          if (
-            this.activeCategory !==
-            this.quiz[this.activeQuestion].category
-          ) {
-            
+          this.activeQuestion = this.activeQuestion + 1;
+
+          if (this.activeCategory !== this.quiz[this.activeQuestion].category) {
             //меняем цвет из бд
-            this.backColor = this.categories.find(c => c.category_id === this.quiz[this.activeQuestion].category+'').category_color;
-            this.fontColor = this.categories.find(c => c.category_id === this.quiz[this.activeQuestion].category+'').category_font;
-            
+            this.backColor = this.categories.find(
+              (c) =>
+                c.category_id === this.quiz[this.activeQuestion].category + ""
+            ).category_color;
+            this.fontColor = this.categories.find(
+              (c) =>
+                c.category_id === this.quiz[this.activeQuestion].category + ""
+            ).category_font;
+
             this.countCategory = this.countCategory + 1;
             this.activeCategory = this.quiz[this.activeQuestion].category;
-            
+
             this.ballCategory.push({
               id_cat: this.activeCategory,
               ball: 0,
-              maxBall: 0
-            })
-            
+              maxBall: 0,
+            });
           }
         }
-        this.showQuestion=true;
+        this.showQuestion = true;
         window.clearTimeout(timeout);
       }, 500);
-      
     },
     isQuizFinished() {
       return this.activeQuestion + 1 === this.quiz.length;
@@ -256,17 +236,22 @@ export default {
     findMaxBall(answers) {
       return Math.max(...answers.map((o) => o.answer_score));
     },
-    getCategoryColors: async function() {
-      var output = await api.axiosGetData('http://test.ce74911.tmweb.ru/api_test/category/readCategories.php');
-      this.categories = output['data'];
-      this.backColor=this.categories[0].category_color;
-      this.fontColor=this.categories[0].category_font;
+    getCategoryColors: async function () {
+      var output = await api.axiosGetData(
+        "http://test.ce74911.tmweb.ru/api_test/category/readCategories.php"
+      );
+      this.categories = output["data"];
+      this.backColor = this.categories[0].category_color;
+      this.fontColor = this.categories[0].category_font;
     },
   },
   components: {
     Question,
     ActiveQuiz,
-    Result
+    Result,
+    img1,
+    img2,
+    img3,
   },
 };
 </script>
@@ -301,7 +286,7 @@ export default {
 .test {
   width: 389px;
   height: 490px;
-  background: var(--background-color);//#fbce26;
+  background: var(--background-color); //#fbce26;
   display: inline-block;
   vertical-align: middle;
   margin-top: 100px;
@@ -351,18 +336,16 @@ export default {
   grid-row-end: 9;
 }
 
-
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all 1s ease;
 }
 .slide-fade-leave-active {
-  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active до версии 2.1.8 */ {
   transform: translateX(-30px);
   opacity: 0;
 }
-
 </style>
 

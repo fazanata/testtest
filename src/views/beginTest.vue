@@ -1,8 +1,9 @@
 <template>
-  <div class="root">
+    <transition name="bounce">
+  <div class="root"  v-if="showEffect">
     <div class="mainitem">
-        <transition name="fade">
-        <div class="centerdiv"  v-if="showText">
+       
+        <div class="centerdiv">
           <p class="font_main">
             eBay исполняется 25 лет!Проверьте, а все ли у вас сбалансировано в
             жизни
@@ -12,11 +13,11 @@
             Начать тест
           </button>
         </div>
-        </transition>
+       
     </div>
 
-    <transition name="bounce">
-    <div class="img_container" v-if="showEffect">
+    
+    <div class="img_container" >
       <figure class="gallery__item gallery__item--1">
         <img class="gallery__img" src="../assets/1@2x.png" alt="Image 1" />
       </figure>
@@ -24,9 +25,8 @@
         <img class="gallery__img" src="../assets/2@2x.png" alt="Image 2" />
       </figure>
     </div>
-    </transition>
   </div>
-
+    </transition>
 </template>
 
 <script>
@@ -191,13 +191,12 @@ export default {
     opacity: 0;
   }
   60% {
-    transform: scale(1);
+    transform: scale(2);
     opacity: 1;
   }
   100% {
+     transform: scale(1);
     transform: translateX(-90px);
-    transform: scale(2);
-    
   }
 }
 
@@ -209,10 +208,9 @@ export default {
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active до версии 2.1.8 */ {
-  transform: translateX(-30px);
+  transform: translateX(-90px);
   opacity: 0;
 }
 
- /* скрываем все за пределами слайдера */
 
 </style>

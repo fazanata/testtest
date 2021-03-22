@@ -7,6 +7,7 @@ import Result from "../views/Result.vue";
 import Section from "../views/Section.vue";
 import Cat from "../views/Cat.vue";
 import anima from "../views/anima.vue";
+import imgGalery from "../components/img/imgGalery.vue";
 
 
 Vue.use(VueRouter);
@@ -52,6 +53,11 @@ const routes = [
     path: "/anima",
     name: "anima",
     component: anima,
+  },
+  {
+    path: "/img",
+    name: "imgGalery",
+    component: imgGalery,
   }
 ];
 

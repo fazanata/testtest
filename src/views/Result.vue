@@ -64,7 +64,7 @@ export default {
       ],
       myRadius: [],
       radius: 150,
-      img: [ '../assets/rest.png', '../assets/friend.png', '../assets/job.png', '../assets/brain.png','../assets/sport.png','../assets/heart.png'],
+      img: [ 'assets/img/rest.png', 'assets/img/friend.png', 'assets/img/job.png', 'assets/img/brain.png','assets/img/sport.png','assets/img/heart.png'],
       name: [],
       errors: [],
     };
@@ -90,9 +90,11 @@ export default {
     //http://jsfiddle.net/wm7pwL2w/2/
 
     this.drawArc(175, 245, 150, 0, Math.PI * 2);
-    console.log("result=", this.ball);
+    console.log("result=", this.ballsTest);
     this.plotData();
     this.drawAllCategories();
+    //пишем в базу результты
+    this.resultPost();
 
   },
   computed: {
@@ -101,6 +103,17 @@ export default {
     }
   },
   methods: {
+    resultPost() {
+      axios.post(`http://test.ce74911.tmweb.ru/api_test/result/create.php`, {
+        result: this.ballCategory,
+        test_id: 1,
+        user_id: 1
+      })
+      .then(response => {})
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
     drawAllCategories: async function() {
       var output = await api.axiosGetData('http://test.ce74911.tmweb.ru/api_test/category/readCategories.php');
       this.name = output['data']
@@ -113,10 +126,13 @@ export default {
         this.vueCanvas.fillText(this.name[n].category_name, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 );
         console.log(lastend)
         var img = new Image();
-        img.onload = function(){
-          this.vueCanvas.drawImage(img, this.name[n].category_name, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
-        }
-        img.src = this.img[n]
+        img.src = this.img[n];
+        this.vueCanvas.drawImage(img, 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
+        console.log('img=', this.img[n])
+        img.onload = function() {
+          this.vueCanvas.drawImage(img, 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
+        
+        };
         lastend += (Math.PI * 2) / this.ballCategory.length;
       }
       

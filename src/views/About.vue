@@ -2,13 +2,14 @@
   <div class="simpletext">
         <h1>О программе</h1>
     Vue js 2, Webpack 4, php, mysql
-    <p>Vue Router</p>
-    http://test.ce74911.tmweb.ru/
+    <p>Vue Router</p><br />
     <br />
-    api_test/category/readCategories.php - чтение списка категорий
+    http://test.ce74911.tmweb.ru/api_test/category/readCategories.php - чтение списка категорий
     <br />
-    api_test/category/readCategory.php?idc=3  - чтение данных категории 
+    http://test.ce74911.tmweb.ru/api_test/category/readCategory.php?idc=3  - чтение данных категории 
   <br />
+  ERD:<br /><br />
+  <img class="gallery__img" src="../assets/erd.jpg" alt="erd" />
   </div>
 </template>
 
