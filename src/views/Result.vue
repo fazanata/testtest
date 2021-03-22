@@ -121,17 +121,22 @@ export default {
       var lastend = 0;
       this.vueCanvas.font = "11px Roboto";
       this.vueCanvas.fillStyle = "#111259";
+      
+      for( var image, array = [], i = 0; i < 6; i++ ){
+        image = new Image;
+        image.src = img[i];
+        array.push( image );
+      };
+
+
       for (var n = 0; n < this.ballCategory.length; n++) {
         
         this.vueCanvas.fillText(this.name[n].category_name, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 );
-        console.log(lastend)
-        let img = new Image();
-        img.src = this.img[n];
-        this.vueCanvas.drawImage(img, 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
-        console.log('img=', this.img[n])
-        img.onload = function() {
-          this.vueCanvas.drawImage(img, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2 - 30, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 -30, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
-        
+
+        //this.vueCanvas.drawImage(imgs[n], 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
+
+        image[n].onload = function() {
+          this.vueCanvas.drawImage(image[n], 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2 - 30, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 -30, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
         };
         lastend += (Math.PI * 2) / this.ballCategory.length;
       }
