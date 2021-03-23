@@ -21,6 +21,7 @@
 
 <script>
 import api from '../api/api.js';
+import axios from "axios";
 
 export default {
   props: ["ball"],
@@ -121,23 +122,25 @@ export default {
       var lastend = 0;
       this.vueCanvas.font = "11px Roboto";
       this.vueCanvas.fillStyle = "#111259";
-      
-      for( var image, array = [], i = 0; i < 6; i++ ){
+      let images = [];
+      for( var image, i = 0; i < 6; i++ ){
         image = new Image;
-        image.src = img[i];
-        array.push( image );
+        image.src = this.img[i];
+        images.push( image );
       };
 
 
       for (var n = 0; n < this.ballCategory.length; n++) {
-        
+        console.log(this.name[n].category_name)
         this.vueCanvas.fillText(this.name[n].category_name, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 );
 
         //this.vueCanvas.drawImage(imgs[n], 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
 
-        image[n].onload = function() {
-          this.vueCanvas.drawImage(image[n], 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2 - 30, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 -30, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
+        images[n].onload = function() {
+          console.log('imag ', images[n].src)
+          this.vueCanvas.drawImage(images[n], 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2 - 30, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 -30, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)
         };
+        
         lastend += (Math.PI * 2) / this.ballCategory.length;
       }
       
