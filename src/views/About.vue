@@ -9,6 +9,7 @@
         result: array,<br />
         test_id: 1,<br />
         user_id: 1<br />
+    }<br />
     <br /><br />
     http://test.ce74911.tmweb.ru/api_test/result/readResults.php?idt=1 -чтение результатов теста 1
     <br />
