@@ -107,7 +107,7 @@ export default {
     resultPost() {
       console.log('res=', JSON.stringify(this.ballCategory))
       axios.post(`http://test.ce74911.tmweb.ru/api_test/result/create.php`, {
-        result: JSON.stringify(this.ballCategory),
+        result: JSON.stringify(this.ballsTest),
         test_id: 1,
         user_id: 1
       })
@@ -132,7 +132,7 @@ export default {
 
 
       for (var n = 0; n < this.ballCategory.length; n++) {
-        console.log(this.name[n].category_name)
+        
         this.vueCanvas.fillText(this.name[n].category_name, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245 );
 
         //this.vueCanvas.drawImage(imgs[n], 0,0, 175 + Math.cos(lastend + Math.PI / this.ballCategory.length)*this.radius/2, Math.sin(lastend + Math.PI / this.ballCategory.length)*this.radius/2 + 245)

@@ -4,6 +4,8 @@
     Vue js 2, Webpack 4, php, mysql
     <p>Vue Router</p><br />
     <br />
+    http://test.ce74911.tmweb.ru/api_test/result/readResults.php -чтение результатов
+    <br />
     http://test.ce74911.tmweb.ru/api_test/category/readCategories.php - чтение списка категорий
     <br />
     http://test.ce74911.tmweb.ru/api_test/category/readCategory.php?idc=3  - чтение данных категории 
