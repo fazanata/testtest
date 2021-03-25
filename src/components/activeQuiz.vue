@@ -32,7 +32,6 @@ export default {
   },
   mounted() {
     this.font = this.fontColor;
-    console.log('f c =', this.fontColor)
   },
   methods: {
     answerClick(id) {

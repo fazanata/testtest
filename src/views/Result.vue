@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     resultPost() {
-      console.log('res=', this.ballCategory)
+      console.log('res=', JSON.stringify(this.ballCategory))
       axios.post(`http://test.ce74911.tmweb.ru/api_test/result/create.php`, {
         result: JSON.stringify(this.ballCategory),
         test_id: 1,
